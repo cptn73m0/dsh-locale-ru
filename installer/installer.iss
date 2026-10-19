@@ -53,14 +53,14 @@ Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -Fil
 Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\uninstall-offline.ps1"" -ProfileDir ""{code:GetProfileDir}"" -Quiet"; Flags: runhidden waituntilterminated; RunOnceId: "RemoveRussianLocale"
 
 [Code]
-function GetProfileDir(): String;
+function GetProfileDir(Param: String): String;
 begin
   Result := ExpandConstant('{%USERPROFILE}\.dsh\profiles\desktop');
 end;
 
 function ProfileExists(): Boolean;
 begin
-  Result := DirExists(GetProfileDir());
+  Result := DirExists(GetProfileDir(''));
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
