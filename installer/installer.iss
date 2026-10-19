@@ -47,20 +47,20 @@ Source: "..\payload\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs cr
 Name: "{group}\Удалить русскую локализацию"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\install-offline.ps1"" -PackDir ""{app}"" -Quiet"; Flags: runhidden waituntilterminated; StatusMsg: "Включаю русскую локализацию..."; Check: ProfileExists
+Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\install-offline.ps1"" -PackDir ""{app}"" -ProfileDir ""{code:GetProfileDir}"" -Quiet"; Flags: runhidden waituntilterminated; StatusMsg: "Включаю русскую локализацию..."; Check: ProfileExists
 
 [UninstallRun]
-Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\uninstall-offline.ps1"" -Quiet"; Flags: runhidden waituntilterminated; RunOnceId: "RemoveRussianLocale"
+Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\uninstall-offline.ps1"" -ProfileDir ""{code:GetProfileDir}"" -Quiet"; Flags: runhidden waituntilterminated; RunOnceId: "RemoveRussianLocale"
 
 [Code]
-function ProfileDir(): String;
+function GetProfileDir(): String;
 begin
   Result := ExpandConstant('{%USERPROFILE}\.dsh\profiles\desktop');
 end;
 
 function ProfileExists(): Boolean;
 begin
-  Result := DirExists(ProfileDir());
+  Result := DirExists(GetProfileDir());
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);

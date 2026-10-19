@@ -1,6 +1,6 @@
 {
     "name":  "dsh-locale-ru",
-    "version":  "0.1.0",
+    "version":  "0.1.1",
     "private":  true,
     "description":  "Russian language pack for the DeepSeek Harness web client",
     "type":  "module",
