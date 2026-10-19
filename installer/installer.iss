@@ -21,7 +21,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}/issues
 AppUpdatesURL={#MyAppURL}/releases
-DefaultDirName={userprofile}\.dsh\locale-packs\ru
+DefaultDirName={%USERPROFILE}\.dsh\locale-packs\ru
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 UsePreviousAppDir=no
@@ -55,7 +55,7 @@ Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -Fil
 [Code]
 function ProfileDir(): String;
 begin
-  Result := ExpandConstant('{userprofile}\.dsh\profiles\desktop');
+  Result := ExpandConstant('{%USERPROFILE}\.dsh\profiles\desktop');
 end;
 
 function ProfileExists(): Boolean;
