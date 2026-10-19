@@ -1,0 +1,7 @@
+dist/
+payload/
+node_modules/
+*.bak-locale-ru
+*.log
+.DS_Store
+Thumbs.db

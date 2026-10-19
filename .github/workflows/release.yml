@@ -1,0 +1,83 @@
+# Сборка установщика и ручного архива.
+#
+# Артефакты:
+#   dist/dsh-locale-ru-setup-<version>.exe — установщик Inno Setup
+#   dist/dsh-locale-ru-manual.zip          — архив ручной установки
+
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          "value=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Stage payload
+        shell: pwsh
+        run: |
+          $items = @(
+            'package.json', 'README.md', 'LICENSE', 'lib', 'locale',
+            'install.ps1', 'uninstall.ps1', 'install-offline.ps1', 'uninstall-offline.ps1'
+          )
+          New-Item -ItemType Directory -Force payload | Out-Null
+          New-Item -ItemType Directory -Force dist\manual\dsh-locale-ru | Out-Null
+          foreach ($item in $items) { Copy-Item $item payload -Recurse -Force }
+          foreach ($item in $items) { Copy-Item $item dist\manual\dsh-locale-ru -Recurse -Force }
+          Compress-Archive -Path dist\manual\dsh-locale-ru -DestinationPath dist\dsh-locale-ru-manual.zip -Force
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" `
+            "/DMyAppVersion=${{ steps.version.outputs.value }}" `
+            "installer\installer.iss"
+
+      - name: Write checksums
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem dist -File | Where-Object { $_.Extension -in '.exe', '.zip' }
+          $lines = foreach ($file in $files) {
+            "{0}  {1}" -f (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant(), $file.Name
+          }
+          Set-Content -Path dist\SHA256SUMS.txt -Value $lines -Encoding ascii
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsh-locale-ru-${{ steps.version.outputs.value }}
+          path: |
+            dist/dsh-locale-ru-manual.zip
+            dist/dsh-locale-ru-setup-*.exe
+            dist/SHA256SUMS.txt
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "v${{ steps.version.outputs.value }}"
+          body_path: .github/release-notes.md
+          files: |
+            dist/dsh-locale-ru-manual.zip
+            dist/dsh-locale-ru-setup-*.exe
+            dist/SHA256SUMS.txt
+          fail_on_unmatched_files: true
