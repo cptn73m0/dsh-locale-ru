@@ -7,8 +7,8 @@
 <p align="center">
   <a href="https://github.com/cptn73m0/dsh-locale-ru/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/cptn73m0/dsh-locale-ru?style=flat-square"></a>
   <a href="https://github.com/cptn73m0/dsh-locale-ru/actions/workflows/release.yml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/cptn73m0/dsh-locale-ru/release.yml?style=flat-square&label=build"></a>
-  <img alt="Строки" src="https://img.shields.io/badge/строки-2901-ff6a3d?style=flat-square">
-  <img alt="Разделы" src="https://img.shields.io/badge/разделы-63-ff6a3d?style=flat-square">
+  <img alt="Строки" src="https://img.shields.io/badge/строки-2910-ff6a3d?style=flat-square">
+  <img alt="Разделы" src="https://img.shields.io/badge/разделы-64-ff6a3d?style=flat-square">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square">
 </p>
 
@@ -44,9 +44,9 @@
 | Траектория | панель инструментов, сводки, вызовы, шаги |
 | Инструменты | задачи, расписание, цели, планы, субагенты, workflow |
 | Документы | предпросмотр Word, Excel, PDF, изображений |
-| Прочее | сочетания клавиш, голосовой ввод, магазин плагинов |
+| Прочее | сочетания клавиш, голосовой ввод, магазин плагинов, меню «Ещё» |
 
-Всего — **2901 строка** в **63 пространствах имён** клиентских плагинов DSH.
+Всего — **2910 строк** в **64 пространствах имён** клиентских плагинов DSH.
 
 ## Установка
 

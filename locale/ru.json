@@ -348,6 +348,8 @@
     "hero.preview": "Предпросмотр",
     "hero.chooseWorkspace": "Выбрать рабочую область",
     "session.hierarchy": "Иерархия сеансов",
+    "session.moreViews": "Другие представления сеанса",
+    "session.moreViewsCurrent": "Другие представления сеанса · {name}",
     "todo.title": "Задачи",
     "todo.progress.done": "{done} выполнено",
     "todo.progress.active": "{active} в работе",
@@ -2241,6 +2243,7 @@
     "dock.drop.top": "Добавить разделение сверху",
     "dock.drop.bottom": "Добавить разделение снизу",
     "tab.guide.title": "Начало",
+    "tab.guide.more": "Другие инструменты",
     "tab.unavailable": "Пока здесь не поддерживается просмотр такого содержимого."
   },
   "sidebarTerminal": {
@@ -2278,7 +2281,8 @@
     "session.new.label": "Новый сеанс",
     "toggle.open": "Открыть боковую панель",
     "toggle.collapse": "Свернуть боковую панель",
-    "panels.label": "Глобальные панели"
+    "panels.label": "Глобальные панели",
+    "panels.more": "Ещё"
   },
   "skill": {
     "row.title": "Навык",
@@ -3025,5 +3029,12 @@
     "wrap": "Переносить строки",
     "unwrap": "Не переносить строки",
     "footnotes": "Сноски"
+  },
+  "entryCustomization": {
+    "install": "Другие плагины",
+    "create": "Создать свой плагин",
+    "createPrompt.sidebar": "Создайте плагин DSH с записью в левой боковой панели.",
+    "createPrompt.conversation": "Создайте плагин DSH с представлением сеанса.",
+    "createPrompt.rightbar": "Создайте плагин DSH с записью в правой боковой панели."
   }
 }
