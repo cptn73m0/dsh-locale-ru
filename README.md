@@ -7,158 +7,101 @@
 <p align="center">
   <a href="https://github.com/cptn73m0/dsh-locale-ru/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/cptn73m0/dsh-locale-ru?style=flat-square"></a>
   <a href="https://github.com/cptn73m0/dsh-locale-ru/actions/workflows/release.yml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/cptn73m0/dsh-locale-ru/release.yml?style=flat-square&label=build"></a>
-  <img alt="Строки" src="https://img.shields.io/badge/строки-2910-ff6a3d?style=flat-square">
-  <img alt="Разделы" src="https://img.shields.io/badge/разделы-64-ff6a3d?style=flat-square">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square">
 </p>
 
-<p align="center">
-  <b><a href="https://github.com/cptn73m0/dsh-locale-ru/releases/latest">Скачать установщик .exe</a></b>
-  ·
-  <b><a href="https://github.com/cptn73m0/dsh-locale-ru/releases/latest">Скачать архив .zip</a></b>
-</p>
+> ## ⚠️ Пакет больше не нужен
+>
+> **В DeepSeek Harness 0.2.2 появилась официальная локализация, включая русский язык.**
+> DSH сам регистрирует язык `ru` и словари для всех разделов интерфейса
+> (8 языков: `zh`, `en`, `ja`, `es`, `fr`, `de`, `ru`, `pt`), поэтому этот пакет
+> больше не устанавливается и не обновляется.
+>
+> Старая версия пакета **0.1.x** в DSH 0.2.2+ конфликтует со встроенным переводом
+> и ломает загрузку web-клиента: в журнале сбоя появляется
+> `web boot: 1 entry did not activate` / `dsh-locale-ru: failed`.
 
-Неофициальный языковой пакет, который полностью переводит интерфейс
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) на русский язык:
-чат, боковую панель, настройки, траекторию, задачи, расписание, плагины, субагентов,
-голосовой ввод и предпросмотр документов.
+## Что делать
 
-Пакет **не патчит `app.asar`** и не трогает файлы установки. Он подключается как обычный
-клиентский плагин профиля `desktop` через штатный механизм языковых пакетов DSH
-(`ctx.locale.addLanguage` + `ctx.locale.register`) и переживает обновления приложения.
+### Пакет 0.1.x был установлен
 
-## Скриншоты
+1. Скачайте [`dsh-locale-ru-cleanup-0.2.0.exe`](https://github.com/cptn73m0/dsh-locale-ru/releases/latest)
+   из последнего релиза и запустите.
+2. Перезапустите DeepSeek Harness.
 
-<p align="center">
-  <img src="assets/settings-language.png" alt="Настройки → Общие → Язык" width="52%">
-  <img src="assets/sidebar-ru.png" alt="Русская боковая панель" width="26%">
-</p>
+Средство очистки удалит языковой пакет, зависимость и запись загрузчика из профиля
+DSH, а также каталог `%USERPROFILE%\.dsh\locale-packs\ru`. Русский интерфейс останется:
+он уже встроен в приложение.
 
-## Что переведено
+### Пакет не устанавливался
 
-| Область | Примеры |
-| --- | --- |
-| Чат и композер | подсказки, статусы хода, ошибки, пустые состояния |
-| Боковая панель | сеансы, рабочие области, плагины, задачи автоматизации |
-| Настройки | общие, модели, аккаунт, плагины, пресеты агента, тема |
-| Траектория | панель инструментов, сводки, вызовы, шаги |
-| Инструменты | задачи, расписание, цели, планы, субагенты, workflow |
-| Документы | предпросмотр Word, Excel, PDF, изображений |
-| Прочее | сочетания клавиш, голосовой ввод, магазин плагинов, меню «Ещё» |
+Ничего устанавливать не нужно. Включите русский язык в самом DSH:
+**Настройки → Общие → Язык → Русский**.
 
-Всего — **2910 строк** в **64 пространствах имён** клиентских плагинов DSH.
+### Вы используете DSH ≤ 0.2.1
 
-## Установка
+В этих версиях официального русского ещё нет. Последняя версия пакета —
+[релиз v0.1.2](https://github.com/cptn73m0/dsh-locale-ru/releases/tag/v0.1.2)
+(установщик `.exe` и архив ручной установки). На DSH 0.2.2+ этот пакет не ставьте.
 
-### Вариант 1: установщик `.exe` (рекомендуется)
+## Что произошло
 
-1. Скачайте `dsh-locale-ru-setup-*.exe` из [последнего релиза](https://github.com/cptn73m0/dsh-locale-ru/releases/latest).
-2. Запустите установщик. SmartScreen может предупредить — подпись у файла отсутствует.
-3. Перезапустите DeepSeek Harness.
+- DSH 0.2.2-rc.1 содержит **официальную локализацию**: 8 языков и полные словари
+  для всех 73 разделов клиентских плагинов (3618 строк на язык). Русский язык
+  включается штатным переключателем языка и обновляется вместе с приложением.
+- Пакет 0.1.x был рассчитан на DSH ≤ 0.2.1 и регистрировал собственные словари
+  для языка `ru`. В 0.2.2 язык и словари уже зарегистрированы официально, поэтому
+  регистрация пакета завершается ошибкой «locale "ru" is already registered»,
+  и DSH сообщает `dsh-locale-ru: failed`.
+- Технически переопределить официальные словари через публичный API нельзя,
+  поэтому продолжать выпуск пакета как перевода не имеет смысла.
 
-Установщик кладёт пакет в `%USERPROFILE%\.dsh\locale-packs\ru`, добавляет зависимость
-в профиль `desktop`, прописывает строку загрузчика в `cordis.patch.yml` и создаёт
-штатное средство удаления в «Приложениях и возможностях».
+## Что делает средство очистки 0.2.0
 
-### Вариант 2: архив `.zip` (ручная установка)
+`dsh-locale-ru-cleanup-0.2.0.exe` — небольшой одноразовый инструмент, который:
 
-1. Скачайте `dsh-locale-ru-manual.zip` из [релиза](https://github.com/cptn73m0/dsh-locale-ru/releases/latest) и распакуйте.
-2. Откройте PowerShell в папке и выполните:
+1. запускает штатный деинсталлятор пакета 0.1.x, если он устанавливался через `.exe`;
+2. убирает зависимость `dsh-locale-ru` из `package.json` профиля `desktop`;
+3. убирает вставку `locale-ru` из `cordis.patch.yml` профиля;
+4. удаляет `%USERPROFILE%\.dsh\locale-packs\ru` (в том числе после ручной установки
+   из архива);
+5. удаляет запись «Русская локализация DeepSeek Harness» из «Приложений и возможностях»,
+   если деинсталлятор не сработал.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
-```
-
-3. Перезапустите DeepSeek Harness.
-
-Удаление:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\uninstall.ps1
-```
-
-### Вариант 3: из исходников
-
-```powershell
-git clone https://github.com/cptn73m0/dsh-locale-ru.git
-cd dsh-locale-ru
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
-```
-
-## Переключение языка
-
-После установки интерфейс переключается на русский автоматически. Вручную:
-**Настройки → Общие → Язык → Русский**. Доступны русский, английский и китайский.
-
-## Что остаётся на английском
-
-- Ответы модели и содержимое ваших файлов.
-- Названия инструментов и технические идентификаторы (`Pwsh`, `Read`, `Bash`, `DeepSeek`, `API`, `JSON`).
-- Описания сторонних плагинов из их `package.json` — они поставляются только на английском и китайском.
-- Служебные сообщения хоста и диагностика вне клиентских словарей.
-- Новые строки, добавленные в DSH после выхода этой версии перевода.
-
-## Как это работает
-
-DSH поддерживает внешние языковые пакеты. Клиентский плагин регистрирует язык и словари
-для пространств имён интерфейса; активный язык выбирается в настройках и сохраняется в профиле.
-
-```js
-export const inject = ['locale']
-
-export function apply(ctx) {
-  ctx.effect(() => ctx.locale.addLanguage({ id: 'ru', label: 'Русский', fallback: 'en' }))
-  ctx.effect(() => ctx.locale.register('common', 'ru', { ok: 'ОК', cancel: 'Отмена' }))
-}
-```
-
-Профиль загружает пакет обычной строкой загрузчика:
-
-```yaml
-- insert:
-    - id: locale-ru
-      name: dsh-locale-ru
-```
+Инструмент идемпотентен: его можно запускать повторно, ничего лишнего он не удалит.
+Установки он не создаёт и в системе не остаётся.
 
 Файлы репозитория:
 
 | Файл | Назначение |
 | --- | --- |
-| `package.json` | Манифест плагина (`dsh.client`, платформа `web`) |
-| `lib/client.js` | Сгенерированный клиентский бандл со словарями |
-| `lib/index.js` | Пустая хост-часть |
-| `locale/ru.json` | Словарь в читаемом виде |
-| `install.ps1` / `uninstall.ps1` | Ручная установка и удаление |
-| `install-offline.ps1` / `uninstall-offline.ps1` | Установка без сети и Node.js (используется `.exe`) |
-| `installer/installer.iss` | Сценарий Inno Setup для сборки `.exe` |
-| `.github/workflows/release.yml` | Сборка `.exe` и `.zip`, публикация релиза |
+| `cleanup/cleanup-offline.ps1` | Скрипт очистки профиля и пакета |
+| `cleanup/cleanup-info.txt` | Текст на финальной странице средства очистки |
+| `installer/cleanup.iss` | Сценарий Inno Setup для сборки `.exe` |
+| `.github/workflows/release.yml` | Сборка и публикация релиза в GitHub Actions |
 
-## Сборка
-
-Пересобрать клиентский бандл из словаря:
+## Сборка средства очистки
 
 ```powershell
-node tools/build-client.mjs
+New-Item -ItemType Directory -Force payload | Out-Null
+Copy-Item cleanup\cleanup-offline.ps1 payload -Force
+
+ISCC.exe /DMyAppVersion=0.2.0 installer\cleanup.iss
 ```
 
-Релиз собирается GitHub Actions при пуше тега:
+Готовый файл появится в `dist\dsh-locale-ru-cleanup-0.2.0.exe`. Релиз собирается
+GitHub Actions при пуше тега `v*`.
 
-```powershell
-git tag v0.1.0
-git push origin v0.1.0
-```
+## Архив: как работал пакет 0.1.x
 
-Workflow соберёт `dsh-locale-ru-setup-<version>.exe` через Inno Setup, упакует ручной архив
-и опубликует оба файла в GitHub Releases.
-
-## Ограничения
-
-- Перевод неофициальный и может отставать от новых версий DSH.
-- Установщик не подписан: SmartScreen может показать предупреждение.
-- Пакет рассчитан на Windows и профиль `desktop`.
-- После обновления DSH новые строки останутся на английском до обновления пакета.
+До DSH 0.2.2 пакет добавлял язык `ru` через `ctx.locale.addLanguage` и регистрировал
+словари `ctx.locale.register` для клиентских плагинов профиля `desktop`
+(2910 строк в 64 пространствах имён). Он не патчил `app.asar` и подключался обычной
+строкой загрузчика в `cordis.patch.yml`. Исходные файлы (`lib/client.js`,
+`locale/ru.json`, `install*.ps1`, `installer/installer.iss`) сохранены в репозитории
+для истории и для сборки релиза v0.1.2.
 
 ## Лицензия
 
-[MIT](LICENSE). DeepSeek Harness — продукт DeepSeek; этот репозиторий не связан с компанией
-и распространяется сообществом.
+[MIT](LICENSE). DeepSeek Harness — продукт DeepSeek; этот репозиторий не связан
+с компанией и распространяется сообществом.
